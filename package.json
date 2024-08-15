@@ -1,0 +1,33 @@
+{
+  "name": "aipl-components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b --clean",
+    "watch-tsc": "tsc -b -w",
+    "build-esbuild": "esbuild ./src/index.ts --bundle --outfile=dist/index.js",
+    "build-rollup": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "keywords": [],
+  "author": "Matt Taylor @mjtdev",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@vitejs/plugin-react": "^4.3.1",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "@storybook/react-vite": "^8.2.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
