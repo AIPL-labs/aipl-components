@@ -3,6 +3,7 @@ assets
 certs
 .parcel-cache
 dist
+storybook-static
 
 lib-cov
 *.seed
@@ -40,3 +41,5 @@ Thumbs.db
 
 _OLD
 _TRASH
+
+*storybook.log
