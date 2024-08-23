@@ -1,0 +1,12 @@
+export type AiplClientState = Partial<{
+    homebaseUrl: string;
+    ws: WebSocket;
+    sessionId: string;
+    appInterfaceId: string;
+    authToken: string;
+    connectionPath: string;
+    maxRetries: number;
+    retryBackoffMs: number;
+    connecting: boolean;
+}>;
+//# sourceMappingURL=AiplClientState.d.ts.map

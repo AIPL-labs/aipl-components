@@ -1,0 +1,1 @@
+{"version":3,"file":"userLogin.d.ts","sourceRoot":"","sources":["../../../src/client/userLogin.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,iBAAiB,EAAE,MAAM,eAAe,CAAC;AAGvD,eAAO,MAAM,SAAS,iCAInB;IACD,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;IACjB,GAAG,EAAE,iBAAiB,CAAC;CACxB,oBAWA,CAAC"}

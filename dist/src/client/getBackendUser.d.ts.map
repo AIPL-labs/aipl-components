@@ -1,0 +1,1 @@
+{"version":3,"file":"getBackendUser.d.ts","sourceRoot":"","sources":["../../../src/client/getBackendUser.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,kBAAkB,CAAC;AAChD,OAAO,KAAK,EAAE,iBAAiB,EAAE,MAAM,eAAe,CAAC;AAGvD,eAAO,MAAM,cAAc,QACpB,iBAAiB,KACrB,OAAO,CAAC,OAAO,GAAG,SAAS,CAuB7B,CAAC"}
