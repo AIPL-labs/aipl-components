@@ -7,7 +7,7 @@ export type AiplComponentContextConfig<T extends object = object> = {
   typeInfo?: TypeInfo<T>;
 };
 
-export type AiplComponentContextRealizedConfig<T extends object = object> =
+export type AiplComponentContextState<T extends object = object> =
   AiplComponentContextConfig<T> & {
     client?: AiplClient;
     componentState: Record<string, string | string[]>;

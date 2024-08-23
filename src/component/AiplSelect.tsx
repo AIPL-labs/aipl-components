@@ -1,18 +1,23 @@
-import { TypeBoxes } from "@mjtdev/engine";
+import { isDefined, TypeBoxes } from "@mjtdev/engine";
 import { useContext, type ButtonHTMLAttributes } from "react";
 import { formatAndCapitalize } from "../common/formatAndCapitalize";
-import { AiplFormConfigContext } from "../provider/AiplFormConfigContext";
+import { AiplComponentContext } from "../provider/AiplComponentContext";
+import type { AiplComponentContextState } from "../type/AiplComponentContextState";
 
 export const AiplSelect = (
   props: ButtonHTMLAttributes<HTMLSelectElement> & {
-    onChange?: (value: string) => void;
+    onChangeValue?: (
+      value: string,
+      contextState: AiplComponentContextState,
+      aiplName: string
+    ) => void;
     defaultValue?: string;
     values?: Record<string, string> | string[];
     aiplName: string;
     formatter?: (value: string) => string;
   }
 ) => {
-  const context = useContext(AiplFormConfigContext);
+  const context = useContext(AiplComponentContext);
   if (!context || !context.typeInfo) {
     throw new Error(
       "AiplFormConfigContext is not provided, make sure to wrap your component with AiplFormConfigProvider"
@@ -22,7 +27,7 @@ export const AiplSelect = (
   const {
     children,
     aiplName,
-    onChange,
+    onChangeValue,
     defaultValue,
     values = [],
     formatter = formatAndCapitalize,
@@ -40,7 +45,23 @@ export const AiplSelect = (
 
   const value = context.componentState[aiplName] || defaultValue;
   return (
-    <select value={value} {...rest}>
+    <select
+      onChange={(evt) => {
+        const value = evt.target.value;
+        context.updateComponentState({
+          ...context.componentState,
+          [aiplName]: value,
+        });
+        if (isDefined(onChangeValue)) {
+          onChangeValue(value, context, aiplName);
+        }
+        if (isDefined(props.onChange)) {
+          props.onChange(evt);
+        }
+      }}
+      value={value}
+      {...rest}
+    >
       {items}
     </select>
   );

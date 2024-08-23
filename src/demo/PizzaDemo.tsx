@@ -1,16 +1,115 @@
+import { isDefined, safe } from "@mjtdev/engine";
 import React, { useContext, useState } from "react";
-import "./pizza-demo.css";
-import { AiplInput } from "../component/AiplInput";
 import { AiplButton } from "../component/AiplButton";
-import { isDefined, Reacts, safe } from "@mjtdev/engine";
-import { effect } from "@preact/signals-react";
+import { AiplInput } from "../component/AiplInput";
 import { AiplRadioGroup } from "../component/AiplRadioGroup";
 import { AiplSelect } from "../component/AiplSelect";
-import type { AiplComponentContextRealizedConfig } from "../type/AiplComponentContextConfig";
-import { AiplFormConfigContext } from "../provider/AiplFormConfigContext";
+import { AiplComponentContext } from "../provider/AiplComponentContext";
+import type { AiplComponentContextState } from "../type/AiplComponentContextState";
+
+import { css } from "@emotion/react";
+
+const testStyle = css`
+  .container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+
+  .group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 0.3em;
+    margin-top: 0.5em;
+  }
+
+  .video {
+    top: 1em;
+    right: 1em;
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+  .instruction {
+    text-align: center;
+    bottom: 10em;
+    right: 10em;
+    position: absolute;
+  }
+
+  h1 {
+    text-align: center;
+    color: #d35400;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+
+  select,
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .radio-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+  }
+
+  fieldset {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: none;
+  }
+  fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  button {
+    background-color: #d35400;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  button:hover {
+    background-color: #e67e22;
+  }
+
+  .order-summary {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+  }
+`;
 
 export const onEnter = async (
-  config: AiplComponentContextRealizedConfig | undefined,
+  config: AiplComponentContextState | undefined,
   instruction: string
 ) => {
   if (!config?.client || !config?.typeInfo?.schema) {
@@ -20,10 +119,12 @@ export const onEnter = async (
 
   const ans = await config.client.ask({
     userMessage: `${instruction}
-              
-              
-              JSON ${typeName} response object ONLY! what is the current ${typeName} the user wants?`,
-    toolConfig: { schema: config.typeInfo?.schema },
+
+JSON ${typeName} response object ONLY! what is the current ${typeName} the user wants?`,
+    toolConfig: {
+      schema: config.typeInfo?.schema,
+      current: config.componentState,
+    },
   });
   console.log("ans", ans);
   const objMaybe = safe(() => JSON.parse(ans));
@@ -36,9 +137,9 @@ export const onEnter = async (
 
 export const PizzaDemo: React.FC = () => {
   const [state, setState] = useState({ instruction: "random pizza" });
-  const context = useContext(AiplFormConfigContext);
+  const context = useContext(AiplComponentContext);
   return (
-    <div>
+    <div css={testStyle}>
       <div className="video">
         Video
         <video id="video" />
@@ -49,7 +150,6 @@ export const PizzaDemo: React.FC = () => {
           onKeyUp={(evt) => {
             if (evt.key === "Enter") {
               onEnter(context, state.instruction);
-              // setState({ instruction: evt.target.value });
             }
           }}
           onChange={(evt) => {

@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { AiplFormConfigProvider } from "../provider/AiplFormConfigProvider";
+import { AiplComponentProvider } from "../provider/AiplComponentProvider";
 import { playTypes } from "../play/play";
 import { AiplSelect } from "./AiplSelect";
 import { mockConfig } from "./mockConfig";
@@ -23,11 +23,11 @@ export default meta;
 
 export const Example: StoryObj<StoryProps> = {
   render: ({ papId, aiplHomeUrl, ...args }) => (
-    <AiplFormConfigProvider
+    <AiplComponentProvider
       config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
     >
       <AiplSelect {...args} />
-    </AiplFormConfigProvider>
+    </AiplComponentProvider>
   ),
   args: {
     papId: mockConfig.papId,
@@ -39,7 +39,7 @@ export const Example: StoryObj<StoryProps> = {
 
 export const Play: StoryObj<StoryProps> = {
   render: ({ papId, aiplHomeUrl, ...args }) => (
-    <AiplFormConfigProvider
+    <AiplComponentProvider
       config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
     >
       <AiplSelect
@@ -49,7 +49,7 @@ export const Play: StoryObj<StoryProps> = {
         }}
         {...args}
       />
-    </AiplFormConfigProvider>
+    </AiplComponentProvider>
   ),
   args: {
     papId: mockConfig.papId,

@@ -2,8 +2,8 @@ import { isUndefined, safe, TypeBoxes } from "@mjtdev/engine";
 import { createAiplClient } from "../client/AiplClients";
 import type {
   AiplComponentContextConfig,
-  AiplComponentContextRealizedConfig,
-} from "../type/AiplComponentContextConfig";
+  AiplComponentContextState,
+} from "../type/AiplComponentContextState";
 
 export const playConnect = async (config: AiplComponentContextConfig) => {
   const client = createAiplClient({ url: config.homeUrl });
@@ -37,7 +37,7 @@ export const extractJsonText = (markdown: string): string => {
   return "";
 };
 
-export const playAsk = async (config: AiplComponentContextRealizedConfig) => {
+export const playAsk = async (config: AiplComponentContextState) => {
   console.log("playAsk");
   // const client = createAiplClient({ url: config.homeUrl });
   console.log("config", config);

@@ -1,48 +1,23 @@
-import { toBoolean } from "@mjtdev/engine";
-import { type InputHTMLAttributes, useContext } from "react";
-import { AiplFormConfigContext } from "../provider/AiplFormConfigContext";
-import type { AiplComponentContextRealizedConfig } from "../type/AiplComponentContextConfig";
-
-export const isChecked = ({
-  aiplName = "",
-  value,
-}: {
-  aiplName: string | undefined; // like "toppings[pepperoni]" or "pepperoni"
-  value: undefined | string | string[]; // like "true" or ["pepperoni", "mushrooms"]
-}): boolean => {
-  if (Array.isArray(value)) {
-    const aiplNameWithoutBrackets = aiplName.replace(/\[.*\]/, "");
-    const regex = /\[(.*?)\]/;
-    const match = aiplName.match(regex);
-
-    if (match) {
-      const checked = value.includes(match[1]);
-      return checked;
-    }
-    return false;
-  }
-  return toBoolean(value);
-};
-
-export const toTopAiplName = (aiplName: string | undefined) => {
-  if (aiplName === undefined) {
-    return undefined;
-  }
-  return aiplName.replace(/\[.*\]/, "");
-};
+import { Arrays, isDefined, toMany } from "@mjtdev/engine";
+import { type InputHTMLAttributes, useContext, useEffect, useRef } from "react";
+import { AiplComponentContext } from "../provider/AiplComponentContext";
+import type { AiplComponentContextState } from "../type/AiplComponentContextState";
+import { toParentAiplName } from "./toParentAiplName";
+import { isChecked } from "./isChecked";
+import { toChildAiplName } from "./toChildAiplName";
 
 export const AiplInput = (
   props: InputHTMLAttributes<HTMLInputElement> & {
     onChangeValue?: (
       value: string,
-      context: AiplComponentContextRealizedConfig,
+      contextState: AiplComponentContextState,
       aiplName: string
     ) => void;
     defaultValue?: string;
     aiplName: string;
   }
 ) => {
-  const context = useContext(AiplFormConfigContext);
+  const context = useContext(AiplComponentContext);
   if (!context || !context.typeInfo) {
     throw new Error(
       "AiplFormConfigContext is not provided, make sure to wrap your component with AiplFormConfigProvider"
@@ -50,20 +25,55 @@ export const AiplInput = (
   }
   const { children, aiplName, onChangeValue, defaultValue, ...rest } = props;
 
-  const topAiplName = toTopAiplName(aiplName) ?? "";
+  const parentAiplName = toParentAiplName(aiplName) ?? "";
 
-  const value = context.componentState[topAiplName] || defaultValue || "";
+  const value = context.componentState[parentAiplName] || defaultValue || "";
   const isCheckable = rest.type === "checkbox" || rest.type === "radio";
-  const checked = isCheckable ? isChecked({ aiplName, value }) : undefined;
+  const currentlyChecked = isCheckable
+    ? isChecked({ aiplName, value })
+    : undefined;
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+    if (isCheckable) {
+      ref.current.checked = currentlyChecked ?? false;
+      return;
+    }
+    ref.current.value = toMany(value).join(", ");
+  }, [ref, currentlyChecked, value]);
   return (
     <input
+      ref={ref}
       onChange={(evt) => {
-        props.onChangeValue &&
-          props.onChangeValue(evt.target.value, context, aiplName);
-        return props.onChange && props.onChange(evt);
+        const value = evt.target.value;
+        const childAiplName = toChildAiplName(aiplName);
+        if (isCheckable && isDefined(childAiplName)) {
+          const currentValue = context.componentState[parentAiplName] || [];
+          const fullSet = new Set([...currentValue, childAiplName]);
+          if (!evt.target.checked) {
+            fullSet.delete(childAiplName);
+          }
+          context.updateComponentState({
+            ...context.componentState,
+            [parentAiplName]: Arrays.from(fullSet),
+          });
+        } else {
+          context.updateComponentState({
+            ...context.componentState,
+            [aiplName]: value,
+          });
+        }
+        if (isDefined(onChangeValue)) {
+          onChangeValue(value, context, aiplName);
+        }
+        if (isDefined(props.onChange)) {
+          props.onChange(evt);
+        }
       }}
       defaultValue={value}
-      checked={checked}
+      defaultChecked={currentlyChecked}
       {...rest}
     >
       {children}

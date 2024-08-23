@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 import { AiplComponentProvider } from "../provider/AiplComponentProvider";
+import { AiplRadioGroup } from "./AiplRadioGroup";
 import { mockConfig } from "./mockConfig";
-import { AiplInput } from "./AiplInput";
 
-type StoryProps = ComponentProps<typeof AiplInput> & {
+type StoryProps = ComponentProps<typeof AiplRadioGroup> & {
   papId: string;
   aiplHomeUrl: string;
 };
 
 const meta: Meta<StoryProps> = {
-  component: AiplInput,
+  component: AiplRadioGroup,
   tags: ["autodocs"],
   argTypes: {
     papId: { control: { type: "text" } },
@@ -20,33 +20,17 @@ const meta: Meta<StoryProps> = {
 
 export default meta;
 
-export const TextExample: StoryObj<StoryProps> = {
+export const Example: StoryObj<StoryProps> = {
   render: ({ papId, aiplHomeUrl, ...args }) => (
     <AiplComponentProvider
       config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
     >
-      <AiplInput {...args} />
+      <AiplRadioGroup {...args} />
     </AiplComponentProvider>
   ),
   args: {
     papId: mockConfig.papId,
     aiplHomeUrl: mockConfig.homeUrl,
-    aiplName: "specialInstructions",
-  },
-};
-
-export const CheckboxExample: StoryObj<StoryProps> = {
-  render: ({ papId, aiplHomeUrl, ...args }) => (
-    <AiplComponentProvider
-      config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
-    >
-      <AiplInput {...args} />
-    </AiplComponentProvider>
-  ),
-  args: {
-    papId: mockConfig.papId,
-    aiplHomeUrl: mockConfig.homeUrl,
-    aiplName: "toppings[pepperoni]",
-    type: "checkbox",
+    aiplName: "peperoniSegment",
   },
 };

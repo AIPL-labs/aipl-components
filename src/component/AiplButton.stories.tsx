@@ -1,8 +1,8 @@
 import { AiplButton } from "./AiplButton";
 import { ComponentProps } from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import type { AiplComponentContextConfig } from "../type/AiplComponentContextConfig";
-import { AiplFormConfigProvider } from "../provider/AiplFormConfigProvider";
+import type { AiplComponentContextConfig } from "../type/AiplComponentContextState";
+import { AiplComponentProvider } from "../provider/AiplComponentProvider";
 import { playAsk, playTypes } from "../play/play";
 import { mockConfig } from "./mockConfig";
 
@@ -24,11 +24,11 @@ export default meta;
 
 export const Example: StoryObj<StoryProps> = {
   render: ({ papId, aiplHomeUrl, ...args }) => (
-    <AiplFormConfigProvider
+    <AiplComponentProvider
       config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
     >
       <AiplButton {...args} />
-    </AiplFormConfigProvider>
+    </AiplComponentProvider>
   ),
   args: {
     papId: mockConfig.papId,
@@ -40,7 +40,7 @@ export const Example: StoryObj<StoryProps> = {
 
 export const Play: StoryObj<StoryProps> = {
   render: ({ papId, aiplHomeUrl, ...args }) => (
-    <AiplFormConfigProvider
+    <AiplComponentProvider
       config={{ ...mockConfig, papId, homeUrl: aiplHomeUrl }}
     >
       <AiplButton
@@ -49,7 +49,7 @@ export const Play: StoryObj<StoryProps> = {
         }}
         {...args}
       />
-    </AiplFormConfigProvider>
+    </AiplComponentProvider>
   ),
   args: {
     papId: mockConfig.papId,
