@@ -17,16 +17,5 @@ const config: StorybookConfig = {
     disableTelemetry: true, // 👈 Disables telemetry
     enableCrashReports: false, // 👈 Disables crash reports
   },
-  // async viteFinal(config) {
-  //   // Merge custom configuration into the default config
-  //   const { mergeConfig } = await import("vite");
-
-  //   return mergeConfig(config, {
-  //     // Add dependencies to pre-optimization
-  //     optimizeDeps: {
-  //       include: ["storybook-dark-mode"],
-  //     },
-  //   });
-  // },
 };
 export default config;

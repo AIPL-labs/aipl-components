@@ -1,5 +1,5 @@
 ._.DS_Store
-assets
+# assets
 certs
 .parcel-cache
 # dist
