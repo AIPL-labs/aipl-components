@@ -6,6 +6,7 @@ import { getBackendUser } from "./getBackendUser";
 import { log } from "./log";
 import { userLogin } from "./userLogin";
 import { papAuth } from "./papAuth";
+import type { AppMessageMap } from "ai-worker-common";
 
 export type AiplClient = ReturnType<typeof createAiplClient>;
 
@@ -46,11 +47,9 @@ export const createAiplClient = (
     papAuth: async ({ accessPointId }: { accessPointId: string }) => {
       return papAuth({ accessPointId, ctx });
     },
-    ask: async (question: string) => {
-      const ans = await call(ctx, "chat:ask", {
-        userMessage: question,
-      });
-      return ans;
+    ask: async (props: AppMessageMap["chat:ask"]) => {
+      const result = await call(ctx, "chat:ask", props);
+      return result as string;
     },
     log,
     listPersonas: async () => {

@@ -4,6 +4,7 @@ certs
 .parcel-cache
 dist
 storybook-static
+*.zip
 
 lib-cov
 *.seed

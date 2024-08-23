@@ -12,7 +12,7 @@
     "build-rollup": "rollup -c",
     "watch": "rollup -c -w",
     "storybook": "storybook dev -p 6006",
-    "start": "storybook dev -p 6006",
+    "start": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
   "keywords": [],
@@ -20,6 +20,8 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
+    "@preact/signals-react": "^2.2.0",
+    "@preact/signals-react-transform": "^0.4.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
@@ -35,17 +37,21 @@
     "@storybook/react-vite": "^8.2.9",
     "@storybook/test": "^8.2.9",
     "@vitejs/plugin-react": "^4.3.1",
+    "ajv": "^8.17.1",
     "esbuild": "^0.23.0",
     "eslint-plugin-storybook": "^0.8.0",
     "import": "^0.0.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "storybook": "^8.2.9",
     "typescript": "^5.5.4",
-    "vite": "^5.4.1"
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.0.3"
   },
   "dependencies": {
     "@mjtdev/engine": "/Users/mtaylor/MJT/mjtdev-engine/",
     "ai-worker-common": "../ai-worker-common/"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

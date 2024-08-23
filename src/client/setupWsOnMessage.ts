@@ -21,7 +21,7 @@ export const setupWsOnMessage = (ws: WebSocket) => {
       // );
       // const message = JSON.parse(data) as AppMessage;
       const message = Bytes.msgPackToObject<AppMessage>(new Uint8Array(data));
-      log("setupWsOnMessage: message received", message);
+      // log("setupWsOnMessage: message received", message);
       EVENTS.emit(message.type, message.detail);
       return;
     } else {
