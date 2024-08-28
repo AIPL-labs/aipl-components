@@ -31,7 +31,8 @@ export default defineConfig({
 
   base: "",
   plugins: [
-    react({ babel: { plugins: [["module:@preact/signals-react-transform"]] } }),
+    // react({ babel: { plugins: [["module:@preact/signals-react-transform"]] } }),
+    react(),
 
     dts({
       outDir: "dist",

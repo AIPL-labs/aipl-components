@@ -1,1 +1,0 @@
-const i=a=>{const t=e=>e.charAt(0).toUpperCase()+e.slice(1),o=/[a-z][A-Z]/.test(a);let s;return o?s=a.split(/(?=[A-Z])/).map(e=>e.toLowerCase()):s=a.split(" ").map(e=>e.toLowerCase()),s.map(t).join(" ")};export{i as f};
