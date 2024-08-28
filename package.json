@@ -43,8 +43,8 @@
     "vite-plugin-dts": "^4.0.3"
   },
   "dependencies": {
-    "@mjtdev/engine": "/Users/mtaylor/MJT/mjtdev-engine/",
-    "ai-worker-common": "../ai-worker-common/"
+    "@mjtdev/engine": "https://github.com/matthewjosephtaylor/mjtdev-engine",
+    "ai-worker-common": "https://github.com/matthewjosephtaylor/ai-worker-common"
   },
   "peerDependencies": {
     "react": "^18.3.1",
