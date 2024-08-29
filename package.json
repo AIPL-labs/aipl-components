@@ -44,10 +44,11 @@
   },
   "dependencies": {
     "@mjtdev/engine": "https://github.com/matthewjosephtaylor/mjtdev-engine",
-    "ai-worker-common": "https://github.com/matthewjosephtaylor/ai-worker-common"
+    "ai-worker-common": "https://github.com/AIPL-labs/ai-worker-common"
   },
   "peerDependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1"
   }
 }
